@@ -1,6 +1,6 @@
 export function createPrompt(amountOfSections, title, additionalContext = "") {
   let firstPartOfPrompt = "";
-  if (amountOfSections > 1) {
+  if (amountOfSections == 1) {
     firstPartOfPrompt = `one section`;
   } else {
     firstPartOfPrompt = `${amountOfSections} sections`;

@@ -15,10 +15,14 @@ app.get("/api", (req, res) => {
 app.post("/api", async (req, res) => {
   const data = req.body;
   console.log("\n\ndata: " + data.amountOfSections + " " + data.title + "\n\n");
-  const content = await generateContent(data.amountOfSections, data.title);
+  const additionalContext = data.additionalContext || "";
+  const content = await generateContent(
+    data.amountOfSections,
+    data.title,
+    additionalContext
+  );
   res.json(content);
 });
-generateContent(2, "Historia polskiego punk rocka");
 
 app.listen(port, () => {
   console.log(`Serwer działa na porcie ${port}`);
