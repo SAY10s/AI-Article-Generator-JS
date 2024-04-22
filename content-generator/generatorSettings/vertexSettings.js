@@ -23,6 +23,25 @@ const maxOutputTokens = 8192;
 const temperature = 0.9;
 const topP = 1;
 
+const safetySettings = [
+  {
+    category: "HARM_CATEGORY_HATE_SPEECH",
+    threshold: "BLOCK_MEDIUM_AND_ABOVE",
+  },
+  {
+    category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+    threshold: "BLOCK_MEDIUM_AND_ABOVE",
+  },
+  {
+    category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+    threshold: "BLOCK_MEDIUM_AND_ABOVE",
+  },
+  {
+    category: "HARM_CATEGORY_HARASSMENT",
+    threshold: "BLOCK_MEDIUM_AND_ABOVE",
+  },
+];
+
 export const vertexSettings = {
   authOptions: {
     credentials: {
@@ -38,4 +57,5 @@ export const vertexSettings = {
     temperature: temperature,
     topP: topP,
   },
+  safetySettings: safetySettings,
 };
