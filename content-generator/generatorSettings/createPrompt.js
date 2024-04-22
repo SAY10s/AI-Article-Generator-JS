@@ -1,4 +1,10 @@
 export function createPrompt(amountOfSections, title, additionalContext = "") {
+  let firstPartOfPrompt = "";
+  if (amountOfSections > 1) {
+    firstPartOfPrompt = `one section`;
+  } else {
+    firstPartOfPrompt = `${amountOfSections} sections`;
+  }
   return `The output must be a JSON file in the given format: [{\"header\": \"first header\", \"content\": \"content of the first section\"}, {\"header\": \"second header\", \"content\": \"content of the second section\"}, (...)]. Content of each section must be at least 2000 characters long.
 
     input: Generate 2 sections for an article titled \'Historia polskiego punk rocka\'  in polish language. 
@@ -28,7 +34,7 @@ export function createPrompt(amountOfSections, title, additionalContext = "") {
     Mimo represji i trudnych warunków, polski punk rock w latach 80. rozwijał się dynamicznie, stając się ważnym głosem sprzeciwu wobec komunistycznego systemu i symbolem walki o wolność.\"
     },]
     
-    input: Generate ${amountOfSections} sections for an article titled \'${title}\'  in polish language. ${additionalContext} 
+    input: Generate ${firstPartOfPrompt} for an article titled \'${title}\'  in polish language. ${additionalContext} 
     output:
     `;
 }
