@@ -2,8 +2,14 @@ import { VertexAI } from "@google-cloud/vertexai";
 import { vertexSettings } from "./generatorSettings/vertexSettings.js";
 import { createPrompt } from "./generatorSettings/createPrompt.js";
 
-const { authOptions, projectId, location, model, generationConfig } =
-  vertexSettings;
+const {
+  authOptions,
+  projectId,
+  location,
+  model,
+  generationConfig,
+  safetySettings,
+} = vertexSettings;
 
 const vertex_ai = new VertexAI({
   project: projectId,
@@ -13,34 +19,22 @@ const vertex_ai = new VertexAI({
 const generativeModel = vertex_ai.preview.getGenerativeModel({
   model: model,
   generationConfig: generationConfig,
-  safetySettings: [
-    {
-      category: "HARM_CATEGORY_HATE_SPEECH",
-      threshold: "BLOCK_MEDIUM_AND_ABOVE",
-    },
-    {
-      category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-      threshold: "BLOCK_MEDIUM_AND_ABOVE",
-    },
-    {
-      category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-      threshold: "BLOCK_MEDIUM_AND_ABOVE",
-    },
-    {
-      category: "HARM_CATEGORY_HARASSMENT",
-      threshold: "BLOCK_MEDIUM_AND_ABOVE",
-    },
-  ],
+  safetySettings: safetySettings,
 });
 
-async function generateContent() {
+async function generateContent(
+  amountOfSections,
+  title,
+  additionalContext = ""
+) {
   const req = {
     contents: [
       {
         role: "user",
         parts: [
           {
-            text: createPrompt(2, "Jak wybrać samochód?"),
+            text: createPrompt(amountOfSections, title, additionalContext),
+            // text: "Cześć",
           },
         ],
       },
@@ -68,10 +62,19 @@ async function generateContent() {
   try {
     const objects = JSON.parse(sanitizedText);
     console.log(objects);
+    return objects;
   } catch (error) {
-    console.log("AI returned invalid JSON");
-    console.log(`AI's response: ${sanitizedText}`);
+    console.log(`
+    -----------------------------------------
+    --------AI returned invalid JSON---------
+    -----------------------------------------
+    ------------AI Response below------------
+    -----------------------------------------\n
+    ${sanitizedText}
+    `);
+
+    return { error: "AI returned invalid JSON" };
   }
 }
-
-generateContent();
+// generateContent(2, "Historia polskiego punk rocka");
+export { generateContent };
