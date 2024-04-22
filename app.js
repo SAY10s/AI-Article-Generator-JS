@@ -1,10 +1,18 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const { VertexAI } = require("@google-cloud/vertexai");
 
+const authOptions = {
+  credentials: {
+    client_email: "311134615011-compute@developer.gserviceaccount.com",
+    private_key:
+      "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDQ2X3JiaPbjtcv\n7d1EOVQM4T5ll5ip2YNaM2VNxJy3DV9azbtIhRdUrss/VUmjCakLQeVPXYQcjDlB\nsPRGPpX4Ds6DXZIUmtpEYNRRUo/Dc9h8Xuz6Eec7I9GXHGjg8s26rr6nv2uYapJi\n5urCOLYpLq+ac7MjyVB5Y1kVjsEEDebqpi7JXGGsy/eTJfa8Fr7m+HddlU9bb63V\nZEf9PJHEIb2JCxxAGk2HGLF+Gx7E7fTJKkPnOYXq1rMiTZJ5lKOPsnjmokWmrLHd\nzP1CeXB3GoOu1wtG9B8mi7KfeFpDGxx8s7Pzc0jox2wRBjK/bnA5kIv4SZN+PDhA\nhFx7x4C1AgMBAAECggEAGv59jGrar8J87FA/mPWa+EY1yS5IuG1plaNOfPiEdAGJ\nuWQdiKBRNWwZT6CPsb/KJm8YO0OgU4tJTEUZsamduy/4v9B8lOa1/wAP+UnlVJM4\n4Expr2HYhBObX793i9m+PxqegHKUruDZdmiX384yN0z2PA2n0iCPYv01Erz+lC4X\nCsiCGq1Kua1rMPKWDJnfUYuu0xamwz8A+OcEeieqkLGlzO3bJ3TLrw6BYxNNTqWR\ndrU/QJjw0Xsd5fAFlhFHm87jx5U9nbJpwzok8PnVHrKehQgfCJy21y884PzhwH++\nRZLu9RkY3pUtB2IjzV0ApiIW67hJhQLj/Zg7wwvEyQKBgQDqn841vFlF5Au8vr8k\nSClzcppHxL0UzVEoJVrRcjecUIX97icVbxsr6AHbte9/M/SaP3xDQRzMNgY4Dj5q\n4EtlegDGKWVYtZ9vlZhbo6OtlQCdfs4DeLlCCdyh62CHrCZkX1feNryB6odSn7KK\n+4WeEoD+eqCjXYj8rgPzJn2eSQKBgQDj4ImYrvsK1K0xswGC/KbrJAIuF8a6MwnK\nhx/tzrvzpmtuiH0S9q88dnVBuy87FLTWfbh9mt8ZNYXUVCtV7QTr0ZrVNyLp77qN\nEZ7c5YXQhwGC483x+JAe0xOgOCGP1WqqhT1LhHwl94CFYKOrSTcpoAIUa9C3seUq\nlpE0M96/DQKBgQDPCzCkuM4q39//sm/oa4mwqBw/YvzcY4bPn48yLtGmLmTfvY5d\n2ssmhrlFEpsDLG0YxRc6HjZ0euQoCWHJXJ8MMIqIVDVr//JvPJrTm2cwIcIGOcVA\nyQLqpNs/Q//OGftTLdPTc4gMOVMrdWPQQ78YzAlrB/nD0CG3oTQ5GOlXiQKBgQDP\nkUfEfB7Pzsmz64oE9n5U0Yfq1F2AXd0dTdgXlag+V+ij1k+XZnxYZs6IASkUd9gB\nSKM0Rk3ReJ9euQyASFWjOFoAvShgTq1usg4yyB8Lwu3te/Or5O3iJgJKftaTXaK7\nkII0t4keTEQVOeHbs+U7VTSPxWVo7fIAyQWat2S+QQKBgQCgBqHm1lGR0zrFFvxZ\nIgWbtAgo9gbdDorWfuw7B90JeQxyeIDxV15iRdfeybNEDi0vciKZm6uvll61qJZs\nGokCuioI+ThRM8a7vHjCkt03VCE8w+ETuBfUbJv/PslINc0w0xvE/P5fvy5iEntd\nb0lq1Fm/KM5a+YStUgT/Uj3s8A==\n-----END PRIVATE KEY-----\n",
+  },
+};
 // Initialize Vertex with your Cloud project and location
 const vertex_ai = new VertexAI({
   project: "content-ai-generator-420613",
   location: "europe-central2",
+  googleAuthOptions: authOptions,
 });
 const model = "gemini-1.0-pro-001";
 
@@ -12,7 +20,7 @@ const model = "gemini-1.0-pro-001";
 const generativeModel = vertex_ai.preview.getGenerativeModel({
   model: model,
   generationConfig: {
-    maxOutputTokens: 2048,
+    maxOutputTokens: 8192,
     temperature: 0.9,
     topP: 1,
   },
