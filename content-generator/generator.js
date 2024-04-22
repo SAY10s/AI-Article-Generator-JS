@@ -1,6 +1,6 @@
 import { VertexAI } from "@google-cloud/vertexai";
 import { vertexSettings } from "./generatorSettings/vertexSettings.js";
-import { prompt } from "./generatorSettings/createPrompt.js";
+import { createPrompt } from "./generatorSettings/createPrompt.js";
 
 const { authOptions, projectId, location, model, generationConfig } =
   vertexSettings;
@@ -10,7 +10,6 @@ const vertex_ai = new VertexAI({
   location: location,
   googleAuthOptions: authOptions,
 });
-
 const generativeModel = vertex_ai.preview.getGenerativeModel({
   model: model,
   generationConfig: generationConfig,
@@ -41,7 +40,7 @@ async function generateContent() {
         role: "user",
         parts: [
           {
-            text: prompt,
+            text: createPrompt(2, "Jak wybrać samochód?"),
           },
         ],
       },
@@ -54,18 +53,25 @@ async function generateContent() {
   const startTime = Date.now();
 
   for await (const item of streamingResp.stream) {
-    const text = item.candidates[0].content.parts[0].text;
     const elapsedTime = Date.now() - startTime;
-    console.log(i + " minęło", elapsedTime / 1000, "s");
+    console.log(`${i} minęło ${elapsedTime / 1000} s`);
     i++;
   }
 
   const aggregatedResponse = await streamingResp.response;
   const text = aggregatedResponse.candidates[0].content.parts[0].text;
-  const sanitizedText = text.replace(/[\n\t\r]/g, " ");
+  const sanitizedText = text
+    .replace(/[\n\t\r]/g, " ")
+    .replace(/\s+/g, " ")
+    .replace(/,\s*]$/, "]");
 
-  const objects = JSON.parse(sanitizedText);
-  console.log(objects);
+  try {
+    const objects = JSON.parse(sanitizedText);
+    console.log(objects);
+  } catch (error) {
+    console.log("AI returned invalid JSON");
+    console.log(`AI's response: ${sanitizedText}`);
+  }
 }
 
 generateContent();
