@@ -2,6 +2,7 @@
   "type": "module",
   "dependencies": {
     "@google-cloud/vertexai": "^1.1.0",
+    "cors": "^2.8.5",
     "express": "^4.19.2"
   },
   "devDependencies": {
