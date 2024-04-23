@@ -3,7 +3,12 @@ export function sanitizeJson(data) {
     let splitData = data.split('"');
     splitData = splitData.map((element, index) => {
       if (index % 4 === 3) {
-        return element.replace(/[\n\t\r]/g, "<br>");
+        let returnElement = element.replace(
+          /\*\*(.*?)\*\*/g,
+          "<strong>$1</strong>"
+        );
+        returnElement = returnElement.replace(/[\n\t\r]/g, "<br>");
+        return returnElement;
       } else {
         return element.replace(/[\n\t\r]/g, " ").replace(/\s+/g, "");
       }
