@@ -1,3 +1,4 @@
+// this function deletes all new lines etc. from the stringified JSON data, so it can be parsed into a valid JSON object. It also replaces some markdown-like syntax with HTML tags. It keeps new lines etc in the content of the JSON object.
 export function sanitizeJson(data) {
   try {
     let splitData = data.split('"');

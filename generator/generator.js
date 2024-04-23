@@ -2,6 +2,9 @@ import { VertexAI } from "@google-cloud/vertexai";
 import { vertexSettings } from "./config/vertexSettings.js";
 import { createPrompt } from "./utils/createPrompt.js";
 import { sanitizeJson } from "./utils/sanitizeJson.js";
+import { generatorConsoleLogMessages } from "./utils/consoleLogMessages.js";
+
+const { genStart, genSuccess, genError } = generatorConsoleLogMessages;
 
 const {
   authOptions,
@@ -23,6 +26,7 @@ const generativeModel = vertex_ai.preview.getGenerativeModel({
   safetySettings: safetySettings,
 });
 
+// returns a promise, resolves with the generated content as an valid JSON object (it's a stringified JSON object, to be specific)
 async function generateContent(
   amountOfSections,
   title,
@@ -47,7 +51,7 @@ async function generateContent(
   let i = 0;
   const startTime = Date.now();
 
-  console.log(`\n-------- [generator.js] ---------\n\nGenerating content...`);
+  console.log(genStart);
   for await (const item of streamingResp.stream) {
     const elapsedTime = Date.now() - startTime;
     console.log(`${elapsedTime / 1000}s`);
@@ -57,21 +61,11 @@ async function generateContent(
   const aggregatedResponse = await streamingResp.response;
   const text = aggregatedResponse.candidates[0].content.parts[0].text;
   try {
-    const objects = sanitizeJson(text);
-    console.log(
-      `\n-------- [generator.js] ---------\n\nContent generated successfully\n\n-----------------------------\n`
-    );
-    return objects;
+    const validJSON = sanitizeJson(text);
+    console.log(genSuccess);
+    return validJSON;
   } catch (error) {
-    console.log(`
-    -----------------------------------------
-    --------AI returned invalid JSON---------
-    -----------------------------------------
-    ------------AI Response below------------
-    -----------------------------------------\n
-    ${sanitizedText}
-    `);
-
+    console.log(`${genError}${sanitizedText}`);
     return { error: "AI returned invalid JSON" };
   }
 }

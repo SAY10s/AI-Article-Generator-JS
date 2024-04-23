@@ -1,3 +1,10 @@
+/**
+ * Creates a prompt for generating sections of an article.
+ * @param {number} amountOfSections - The number of sections to generate.
+ * @param {string} title - The title of the article.
+ * @param {string} [additionalContext=""] - Additional context for the prompt.
+ * @returns {string} - The generated prompt.
+ */
 export function createPrompt(amountOfSections, title, additionalContext = "") {
   let firstPartOfPrompt = "";
   if (amountOfSections == 1) {
