@@ -1,5 +1,5 @@
 import { VertexAI } from "@google-cloud/vertexai";
-import { vertexSettings } from "./generatorSettings/vertexSettings.js";
+import { vertexSettings } from "./config/vertexSettings.js";
 import { createPrompt } from "./utils/createPrompt.js";
 import { sanitizeJson } from "./utils/sanitizeJson.js";
 
@@ -47,19 +47,20 @@ async function generateContent(
   let i = 0;
   const startTime = Date.now();
 
+  console.log(`\n-------- [generator.js] ---------\n\nGenerating content...`);
   for await (const item of streamingResp.stream) {
     const elapsedTime = Date.now() - startTime;
-    console.log(`[generator.js] -> i: ${i} minęło ${elapsedTime / 1000} s`);
+    console.log(`${elapsedTime / 1000}s`);
     i++;
   }
 
   const aggregatedResponse = await streamingResp.response;
   const text = aggregatedResponse.candidates[0].content.parts[0].text;
-  console.log(`[generator.js] -> text: ${text}`);
-
   try {
     const objects = sanitizeJson(text);
-    console.log(`[generator.js] -> objects: ${objects}`);
+    console.log(
+      `\n-------- [generator.js] ---------\n\nContent generated successfully\n\n-----------------------------\n`
+    );
     return objects;
   } catch (error) {
     console.log(`

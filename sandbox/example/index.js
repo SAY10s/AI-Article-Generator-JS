@@ -1,5 +1,3 @@
-console.log(`[html-js.js] -> HERE`);
-
 fetch("http://localhost:8080/api", {
   method: "POST",
   headers: {
@@ -14,7 +12,6 @@ fetch("http://localhost:8080/api", {
   .then((response) => response.json())
   .then((data) => {
     let json = JSON.parse(data);
-    console.log(`[html-js.js] -> data: ${json}`);
     const html = json.map((item) => {
       return `
                 <h2>
@@ -38,5 +35,3 @@ fetch("http://localhost:8080/api", {
   .catch((error) => {
     console.error(`[html-js.js] -> error: ${error}`);
   });
-
-console.log(`[html-js.js] -> XD`);
