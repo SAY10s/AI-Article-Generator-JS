@@ -18,7 +18,7 @@ fetch("http://localhost:8080/generate", {
     console.log(dataJSArray);
     const html = generateHTML(dataJSArray);
     console.log(html);
-    document.getElementById("main").innerHTML = html.join("");
+    document.getElementById("main").innerHTML = html;
   })
   .catch((error) => {
     console.error(`[website]: ${error}`);
