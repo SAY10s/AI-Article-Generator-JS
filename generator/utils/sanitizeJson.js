@@ -8,8 +8,10 @@ export function sanitizeJson(data) {
           "<strong>$1</strong>"
         );
         returnElement = returnElement.replace(/\*/g, "<br>");
+        returnElement = returnElement.replace(/(\d+)\./g, "\n$1.");
         returnElement = returnElement.replace(/\n\n/g, "\n");
         returnElement = returnElement.replace(/[\n\t\r]/g, "<br>");
+        returnElement = returnElement.replace(/<br><br>/g, "<br>");
         return returnElement;
       } else {
         return element.replace(/[\n\t\r]/g, " ").replace(/\s+/g, "");
