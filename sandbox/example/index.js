@@ -13,10 +13,10 @@ fetch("http://localhost:8080/generate", {
 })
   .then((response) => response.json())
   .then((data) => {
-    let json = JSON.parse(data);
-    const html = json.map((item) => {
-      return generateHTML(item.header, item.content);
-    });
+    let dataJSArray = JSON.parse(data);
+    console.log(dataJSArray);
+    const html = generateHTML(dataJSArray);
+    console.log(html);
     document.getElementById("main").innerHTML = html.join("");
   })
   .catch((error) => {
