@@ -1,6 +1,7 @@
 import { VertexAI } from "@google-cloud/vertexai";
 import { vertexSettings } from "./generatorSettings/vertexSettings.js";
 import { createPrompt } from "./generatorSettings/createPrompt.js";
+import { convertAiResponseToValidJson } from "./generatorSettings/convertAiResponseToValidJson.js";
 
 const {
   authOptions,
@@ -48,20 +49,17 @@ async function generateContent(
 
   for await (const item of streamingResp.stream) {
     const elapsedTime = Date.now() - startTime;
-    console.log(`${i} minęło ${elapsedTime / 1000} s`);
+    console.log(`[generator.js] -> i: ${i} minęło ${elapsedTime / 1000} s`);
     i++;
   }
 
   const aggregatedResponse = await streamingResp.response;
   const text = aggregatedResponse.candidates[0].content.parts[0].text;
-  const sanitizedText = text
-    .replace(/[\n\t\r]/g, " ")
-    .replace(/\s+/g, " ")
-    .replace(/,\s*]$/, "]");
+  console.log(`[generator.js] -> text: ${text}`);
 
   try {
-    const objects = JSON.parse(sanitizedText);
-    console.log(objects);
+    const objects = convertAiResponseToValidJson(text);
+    console.log(`[generator.js] -> objects: ${objects}`);
     return objects;
   } catch (error) {
     console.log(`
