@@ -1,3 +1,5 @@
+import { generateHTML } from "../../generator/utils/generateHTML.js";
+
 fetch("http://localhost:8080/generate", {
   method: "POST",
   headers: {
@@ -13,24 +15,13 @@ fetch("http://localhost:8080/generate", {
   .then((data) => {
     let json = JSON.parse(data);
     const html = json.map((item) => {
-      return `
-                <h2>
-                        <span style="font-size: 18pt">
-                                <strong>
-                                        ${item.header}
-                                </strong>
-                        </span>
-                </h2>
-                <p><br /></p>
-                <p dir="ltr">
-                        ${item.content}
-                </p>
-                
-                <p><br /></p>
-                `;
+      return generateHTML(item.header, item.content);
     });
     document.getElementById("main").innerHTML = html.join("");
   })
   .catch((error) => {
-    console.error(`[html-js.js] -> error: ${error}`);
+    console.error(`[website]: ${error}`);
+    document.getElementById(
+      "main"
+    ).innerHTML = `<p>An error occured!</p><p>${error}</p>`;
   });
