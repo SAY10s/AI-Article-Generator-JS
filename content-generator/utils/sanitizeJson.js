@@ -1,4 +1,4 @@
-export function convertAiResponseToValidJson(data) {
+export function sanitizeJson(data) {
   try {
     let splitData = data.split('"');
     splitData.forEach((element, index) => {

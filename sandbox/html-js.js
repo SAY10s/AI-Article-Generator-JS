@@ -16,16 +16,6 @@ fetch("http://localhost:8080/api", {
     let json = JSON.parse(data);
     console.log(`[html-js.js] -> data: ${json}`);
     const html = json.map((item) => {
-      //   let content = item.content;
-      //   content = content.split(".");
-      //   console.log(`[html-js.js] -> content: ${content}`);
-      //   content = content.map((item) => {
-      //     return `${item}. `;
-      //   });
-      //   console.log(`[html-js.js] -> content: ${content}`);
-      //   const firstHalf = content.slice(0, Math.ceil(content.length / 2));
-      //   const secondHalf = content.slice(Math.ceil(content.length / 2));
-
       return `
                 <h2>
                         <span style="font-size: 18pt">

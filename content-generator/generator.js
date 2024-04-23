@@ -1,7 +1,7 @@
 import { VertexAI } from "@google-cloud/vertexai";
 import { vertexSettings } from "./generatorSettings/vertexSettings.js";
-import { createPrompt } from "./generatorSettings/createPrompt.js";
-import { convertAiResponseToValidJson } from "./generatorSettings/convertAiResponseToValidJson.js";
+import { createPrompt } from "./utils/createPrompt.js";
+import { sanitizeJson } from "./utils/sanitizeJson.js";
 
 const {
   authOptions,
@@ -58,7 +58,7 @@ async function generateContent(
   console.log(`[generator.js] -> text: ${text}`);
 
   try {
-    const objects = convertAiResponseToValidJson(text);
+    const objects = sanitizeJson(text);
     console.log(`[generator.js] -> objects: ${objects}`);
     return objects;
   } catch (error) {
