@@ -1,6 +1,7 @@
 import express, { json } from "express";
 import { generateContent } from "./content-generator/generator.js";
 import cors from "cors";
+import fs from "fs/promises";
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -34,16 +35,29 @@ app.post("/test", async (req, res) => {
   ]);
 });
 
+app.get("/final", async (req, res) => {
+  let data = await fs.readFile("./tests/final.json", "utf8");
+  console.log(data);
+
+  res.json(data);
+});
+
 app.post("/api", async (req, res) => {
   const data = req.body;
-  console.log("\n\ndata: " + data.amountOfSections + " " + data.title + "\n\n");
+  console.log(
+    "[index.js] -> data: \n\ndata: " +
+      data.amountOfSections +
+      " " +
+      data.title +
+      "\n\n"
+  );
   const additionalContext = data.additionalContext || "";
   const content = await generateContent(
     data.amountOfSections,
     data.title,
     additionalContext
   );
-  console.log("Content: " + content);
+  console.log(`[index.js] -> content:  + ${content}`);
   res.json(content);
 });
 
