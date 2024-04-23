@@ -13,6 +13,9 @@ export function sanitizeJson(data) {
         returnElement = returnElement.replace(/\n\n/g, "\n");
         returnElement = returnElement.replace(/[\n\t\r]/g, "<br>");
         returnElement = returnElement.replace(/<br><br>/g, "<br>");
+        returnElement = returnElement.replace(/<strong>/g, "<br><strong>");
+        returnElement = returnElement.replace(/<br><br><br>/g, "<br><br>");
+
         return returnElement;
       } else {
         return element.replace(/[\n\t\r]/g, " ").replace(/\s+/g, "");
