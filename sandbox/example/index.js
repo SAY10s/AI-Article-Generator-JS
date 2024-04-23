@@ -8,7 +8,8 @@ fetch("http://localhost:8080/generate", {
   body: JSON.stringify({
     amountOfSections: 5,
     title: "Czy moja firma potrzebuje strony internetowej?",
-    additionalContext: "Each section must be really long.",
+    additionalContext:
+      "Each section must be really long. Use as much markodwn as you can.",
   }),
 })
   .then((response) => response.json())
