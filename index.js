@@ -28,6 +28,7 @@ app.post("/generate", async (req, res) => {
     additionalContext
   );
 
+  //stringified JSON object with the generated content
   res.json(content);
 });
 
