@@ -7,6 +7,8 @@ export function sanitizeJson(data) {
           /\*\*(.*?)\*\*/g,
           "<strong>$1</strong>"
         );
+        returnElement = returnElement.replace(/\*/g, "<br>");
+        returnElement = returnElement.replace(/\n\n/g, "\n");
         returnElement = returnElement.replace(/[\n\t\r]/g, "<br>");
         return returnElement;
       } else {
