@@ -1,4 +1,4 @@
-fetch("http://localhost:8080/api", {
+fetch("http://localhost:8080/generate", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -29,7 +29,6 @@ fetch("http://localhost:8080/api", {
                 <p><br /></p>
                 `;
     });
-    console.log(`[html-js.js] -> html: ${html}`);
     document.getElementById("main").innerHTML = html.join("");
   })
   .catch((error) => {
