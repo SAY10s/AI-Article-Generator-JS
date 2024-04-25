@@ -11,9 +11,14 @@ export const generatorConsoleLogMessages = {
 };
 
 // that's a console message from the index.js file (API)
-export function logGivenParams(amountOfSections, title, additionalContext) {
+export function logGivenParams(
+  amountOfSections,
+  title,
+  navigation,
+  additionalContext
+) {
   console.log(
-    `\n-------- [index.js] --------- \n\nThe params of request:\n\namountOfSections: ${amountOfSections}\ntitle: ${title}\nadditionalContext: ${additionalContext}\n\n-----------------------------\n`
+    `\n-------- [index.js] --------- \n\nThe params of request:\n\namountOfSections: ${amountOfSections}\ntitle: ${title}\nnavigation: ${navigation}\nadditionalContext: ${additionalContext}\n\n-----------------------------\n`
   );
 }
 

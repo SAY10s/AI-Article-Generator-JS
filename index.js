@@ -39,7 +39,12 @@ async function tempHelper(res, req) {
   const data = req.body;
   const additionalContext = data.additionalContext || "";
 
-  logGivenParams(data.amountOfSections, data.title, additionalContext);
+  logGivenParams(
+    data.amountOfSections,
+    data.title,
+    data.navigation || false,
+    additionalContext
+  );
 
   const content = await generateContent(
     data.amountOfSections,
