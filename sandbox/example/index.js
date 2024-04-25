@@ -1,6 +1,4 @@
-import { generateHTML } from "../../generator/utils/generateHTML.js";
-
-fetch("http://localhost:8080/generate", {
+fetch("http://localhost:8080/generateHTML", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -14,10 +12,9 @@ fetch("http://localhost:8080/generate", {
 })
   .then((response) => response.json())
   .then((data) => {
-    console.log(data);
-    const html = generateHTML(data);
-    console.log(html);
-    document.getElementById("main").innerHTML = html;
+    // console.log(data);
+    // console.log(data.html);
+    document.getElementById("main").innerHTML = data.html;
   })
   .catch((error) => {
     console.error(`[website]: ${error}`);
