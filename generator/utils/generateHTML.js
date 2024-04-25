@@ -1,6 +1,9 @@
 // generates HTML from the data array in format used on TechStudio website
-export function generateHTML(dataArray, navigation = false) {
-  let dataJSArray = JSON.parse(dataArray);
+export function generateHTML(json, navigation = false) {
+  json = json.replace("```json", "");
+  json = json.replace("```", "");
+
+  let dataJSArray = JSON.parse(json);
   let html = "";
   if (navigation === true) {
     html += `<div class='my-4 sm:w-9/12 md:w-1/3 border-2 border-color-[#d9d9d9]' style='padding: 20px;'><ol>`;
