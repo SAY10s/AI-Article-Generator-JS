@@ -4,6 +4,9 @@ import { createPrompt } from "./utils/createPrompt.js";
 import { sanitizeJson } from "./utils/sanitizeJson.js";
 import { generatorConsoleLogMessages } from "./utils/consoleLogMessages.js";
 
+//temp
+import fs from "fs";
+
 const { genStart, genSuccess, genError } = generatorConsoleLogMessages;
 
 const {
@@ -67,7 +70,8 @@ async function generateContent(
   const aggregatedResponse = await streamingResp.response;
   const text = aggregatedResponse.candidates[0].content.parts[0].text;
 
-  console.log("Text: " + text);
+  // console.log("Text: " + text);
+  // fs.writeFileSync("output.json", text);
 
   try {
     const validJSON = sanitizeJson(text);

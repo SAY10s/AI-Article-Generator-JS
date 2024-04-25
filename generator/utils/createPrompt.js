@@ -17,5 +17,15 @@ export function createPrompt(
   } else {
     firstPartOfPrompt = `${amountOfSections + 1} sections`;
   }
-  return `The output must be a JSON file in the given format: [{\"header\": \"first header\", \"content\": \"content of the first section\"}, {\"header\": \"second header\", \"content\": \"content of the second section\"}, (...)]. Content of each section must be at least 2000 characters long. Each section must be really long. Never start sentence with bold followed by colon. Don't list anything. Paragraph must always be written as continuous text. Generate ${firstPartOfPrompt} for an article titled \'${title}\'  in ${language} language. Last section must be a summary. Make the summary at least as long as the other sections. ${additionalContext}. Title of each section must contain minimum of 4 words.`;
+
+  // let languageSpecificationPart = "";
+  // if (language === "english" || language === "English") {
+  //   languageSpecificationPart = ` in ${language} language. Remember to keep output in the format given in the first part of the prompt.`;
+  // } else {
+  //   languageSpecificationPart = ` in ${language} language.`;
+  // }
+
+  let languageSpecificationPart = ` in ${language} language. Remember to keep output in the format given in the first part of the prompt.`;
+
+  return `The output must be a JSON file in the given format: [{\"header\": \"first header\", \"content\": \"content of the first section\"}, {\"header\": \"second header\", \"content\": \"content of the second section\"}, (...)]. Content of each section must be at least 2000 characters long. Each section must be really long. Never start sentence with bold followed by colon. Don't list anything. Paragraph must always be written as continuous text. Generate ${firstPartOfPrompt} for an article titled \'${title}\'  ${languageSpecificationPart} Last section must be a summary. Make the summary at least as long as the other sections. ${additionalContext}. Title of each section must contain minimum of 4 words.`;
 }
