@@ -7,7 +7,8 @@ fetch("http://localhost:8080/generateHTML", {
     amountOfSections: 8,
     title: "SEO co to jest - Optymalizacja I Pozycjonowanie Stron",
     additionalContext: "",
-    navigation: true,
+    language: "german",
+    // navigation: true,
   }),
 })
   .then((response) => response.json())

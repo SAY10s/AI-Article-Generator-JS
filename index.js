@@ -14,6 +14,7 @@ app.use(json());
 app.post("/generateHTML", async (req, res) => {
   const data = req.body;
   const additionalContext = data.additionalContext || "";
+  const language = data.language || "";
   const navigation = data.navigation || false;
 
   logGivenParams(
@@ -26,6 +27,7 @@ app.post("/generateHTML", async (req, res) => {
   const content = await generateContent(
     data.amountOfSections,
     data.title,
+    language,
     additionalContext
   );
 

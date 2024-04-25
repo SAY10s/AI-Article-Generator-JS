@@ -5,12 +5,17 @@
  * @param {string} [additionalContext=""] - Additional context for the prompt.
  * @returns {string} - The generated prompt.
  */
-export function createPrompt(amountOfSections, title, additionalContext = "") {
+export function createPrompt(
+  amountOfSections,
+  title,
+  language = "polish",
+  additionalContext = ""
+) {
   let firstPartOfPrompt = "";
   if (amountOfSections == 1) {
     firstPartOfPrompt = `two sections`;
   } else {
     firstPartOfPrompt = `${amountOfSections + 1} sections`;
   }
-  return `The output must be a JSON file in the given format: [{\"header\": \"first header\", \"content\": \"content of the first section\"}, {\"header\": \"second header\", \"content\": \"content of the second section\"}, (...)]. Content of each section must be at least 2000 characters long. Each section must be really long. Never start sentence with bold followed by colon. Don't list anything. Paragraph must always be written as continuous text. Generate ${firstPartOfPrompt} for an article titled \'${title}\'  in polish language. Last section must be a summary. Make the summary at least as long as the other sections. ${additionalContext}. Title of each section must contain minimum of 4 words.`;
+  return `The output must be a JSON file in the given format: [{\"header\": \"first header\", \"content\": \"content of the first section\"}, {\"header\": \"second header\", \"content\": \"content of the second section\"}, (...)]. Content of each section must be at least 2000 characters long. Each section must be really long. Never start sentence with bold followed by colon. Don't list anything. Paragraph must always be written as continuous text. Generate ${firstPartOfPrompt} for an article titled \'${title}\'  in ${language} language. Last section must be a summary. Make the summary at least as long as the other sections. ${additionalContext}. Title of each section must contain minimum of 4 words.`;
 }

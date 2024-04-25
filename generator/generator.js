@@ -30,6 +30,7 @@ const generativeModel = vertex_ai.preview.getGenerativeModel({
 async function generateContent(
   amountOfSections,
   title,
+  language = "polish",
   additionalContext = ""
 ) {
   const req = {
@@ -38,7 +39,12 @@ async function generateContent(
         role: "user",
         parts: [
           {
-            text: createPrompt(amountOfSections, title, additionalContext),
+            text: createPrompt(
+              amountOfSections,
+              title,
+              language,
+              additionalContext
+            ),
             // text: "Cześć",
           },
         ],
@@ -60,6 +66,9 @@ async function generateContent(
 
   const aggregatedResponse = await streamingResp.response;
   const text = aggregatedResponse.candidates[0].content.parts[0].text;
+
+  console.log("Text: " + text);
+
   try {
     const validJSON = sanitizeJson(text);
     console.log(genSuccess);
