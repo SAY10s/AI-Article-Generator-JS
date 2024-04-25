@@ -4,17 +4,14 @@ fetch("http://localhost:8080/generateHTML", {
     "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    amountOfSections: 5,
-    title: "Czy moja firma potrzebuje strony internetowej?",
-    additionalContext:
-      "Each section must be really long. Use as much markodwn as you can.",
+    amountOfSections: 8,
+    title: "SEO co to jest - Optymalizacja I Pozycjonowanie Stron",
+    additionalContext: "",
     navigation: true,
   }),
 })
   .then((response) => response.json())
   .then((data) => {
-    // console.log(data);
-    // console.log(data.html);
     document.getElementById("main").innerHTML = data.html;
   })
   .catch((error) => {
