@@ -18,37 +18,33 @@ app.get("/generate", async (req, res) => {
 });
 
 app.post("/generate", async (req, res) => {
-  const data = req.body;
-  const additionalContext = data.additionalContext || "";
-
-  logGivenParams(data.amountOfSections, data.title, additionalContext);
-
-  const content = await generateContent(
-    data.amountOfSections,
-    data.title,
-    additionalContext
-  );
-
-  //stringified JSON object with the generated content
+  let content = await tempHelper(res, req);
   res.json(content);
 });
+
+//returns JSON with generated HTML
 app.post("/generateHTML", async (req, res) => {
-  const data = req.body;
-  const additionalContext = data.additionalContext || "";
-
-  logGivenParams(data.amountOfSections, data.title, additionalContext);
-
-  const content = await generateContent(
-    data.amountOfSections,
-    data.title,
-    additionalContext
-  );
-
+  let content = await tempHelper(res, req);
   const html = generateHTML(content);
-  //stringified JSON object with the generated content
   res.json({ html: html });
 });
 
 app.listen(port, () => {
   console.log(`Server is on port: ${port}`);
 });
+
+async function tempHelper(res, req) {
+  const data = req.body;
+  const additionalContext = data.additionalContext || "";
+
+  logGivenParams(data.amountOfSections, data.title, additionalContext);
+
+  const content = await generateContent(
+    data.amountOfSections,
+    data.title,
+    additionalContext
+  );
+
+  //stringified JSON object with the generated content
+  return content;
+}
