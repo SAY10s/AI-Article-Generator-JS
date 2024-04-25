@@ -17,7 +17,7 @@ Create a new project or choose an existing one if you have used Vertex AI before
   "type": "service_account",
   "project_id": "project_id",
   "private_key_id": "private_key_id",
-  "private_key": "-----BEGIN PRIVATE KEY-----\n--IT WILL BE REALLY LONG--\n-----END PRIVATE KEY-----\n",
+  "private_key": "---BEGIN PRIVATE KEY---\n--IT WILL BE REALLY LONG--\n---END PRIVATE KEY---\n",
   "client_email": "client_email",
   "client_id": "client_id",
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
