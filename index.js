@@ -5,6 +5,7 @@ import {
   logGivenParams,
   wrongApiUrl,
 } from "./generator/utils/consoleLogMessages.js";
+import { generateHTML } from "./generator/utils/generateHTML.js";
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -30,6 +31,22 @@ app.post("/generate", async (req, res) => {
 
   //stringified JSON object with the generated content
   res.json(content);
+});
+app.post("/generateHTML", async (req, res) => {
+  const data = req.body;
+  const additionalContext = data.additionalContext || "";
+
+  logGivenParams(data.amountOfSections, data.title, additionalContext);
+
+  const content = await generateContent(
+    data.amountOfSections,
+    data.title,
+    additionalContext
+  );
+
+  const html = generateHTML(content);
+  //stringified JSON object with the generated content
+  res.json({ html: html });
 });
 
 app.listen(port, () => {
