@@ -25,7 +25,9 @@ app.post("/generate", async (req, res) => {
 //returns JSON with generated HTML
 app.post("/generateHTML", async (req, res) => {
   let content = await tempHelper(res, req);
-  const html = generateHTML(content);
+
+  const navigation = req.body.navigation || false;
+  const html = generateHTML(content, navigation);
   res.json({ html: html });
 });
 

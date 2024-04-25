@@ -8,6 +8,7 @@ fetch("http://localhost:8080/generateHTML", {
     title: "Czy moja firma potrzebuje strony internetowej?",
     additionalContext:
       "Each section must be really long. Use as much markodwn as you can.",
+    navigation: true,
   }),
 })
   .then((response) => response.json())
