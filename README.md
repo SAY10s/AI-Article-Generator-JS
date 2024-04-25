@@ -1,8 +1,10 @@
-> [!CAUTION]
-> This `readme.md` is not ready yet! Don't worry if the project doesn't work after following this documentation.
 # AI content generator
-This is a tool that allows you to generate ready-to-upload articles directly onto a website (i.e., ready HTML or any other desired format, e.g., .json).
-
+This tool allows you to generate a .json file that contains the ready-to-insert HTML article under the key 'html'. Sample returned JSON below:
+```json
+{
+    "html": "<div> Article's html code. </div>"
+}
+```
 ## Generator setup
 
 Firstly, you need to have a Google Cloud account. Install the [gcloud CLI](https://cloud.google.com/sdk/docs/install). Log into your Google Cloud account in your local CLI using this command:
@@ -29,3 +31,31 @@ Now you can install all the dependencies using:
 ```
 npm i
 ```
+To start the server, simply run this command in the project's root directory. In the following example, we will assume that the server is localhost.
+```
+node index.js
+```
+## Usage
+When the server is already running, all you need to do is send a POST request to `yourserveradresss/generateHTML` with the following body:
+| Key |Type | Description |
+| --- | :---: | --- |
+| `amountOfSections` | number | The number of sections in the article (the generator automatically adds a summary at the end, which is not included in the section count). |
+| `title` | string | Title of the article. |
+| `language` | string | language of the article (i.e. `polish`, `english`, `german`). | 
+| `navigation` | bool | Generating a table of contents/navigation at the beginning of the article. |
+| `additionalContext` | string | Any additional information for the prompt. (i.e. `Article should be written in formal form`). | 
+
+```json
+{
+  "amountOfSections": 5,
+  "title": "Write an article about Łukasz Nowak",
+  "language": "polish",
+  "navigation": true,
+  "additionalContext": "It should be written in formal form"
+}
+```
+
+It usually takes around `10 seconds` for AI to generate the article.
+
+> [!IMPORTANT]
+> To commemorate our beloved young specialist in the field of content marketing, [`Łukasz Nowak`](https://tech-studio.pl/_nuxt/author.9c4d32d8.jpg) (aka `Luke Newman`, `Lukas Neumann`), this microservice is named after him.
