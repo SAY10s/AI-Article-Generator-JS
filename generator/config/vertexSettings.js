@@ -20,7 +20,7 @@ const model = "gemini-1.0-pro-001";
 
 //generationConfig
 const maxOutputTokens = 8192;
-const temperature = 0.9;
+const temperature = 0.3;
 const topP = 1;
 
 const safetySettings = [
